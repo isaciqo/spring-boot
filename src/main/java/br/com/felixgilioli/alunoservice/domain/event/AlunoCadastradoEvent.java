@@ -1,6 +1,6 @@
-package br.com.felixgilioli.alunoservice.event;
+package br.com.felixgilioli.alunoservice.domain.event;
 
-import br.com.felixgilioli.alunoservice.entity.Aluno;
+import br.com.felixgilioli.alunoservice.domain.entity.Aluno;
 import org.springframework.context.ApplicationEvent;
 
 public class AlunoCadastradoEvent extends ApplicationEvent {

@@ -1,6 +1,6 @@
-package br.com.felixgilioli.alunoservice.repository;
+package br.com.felixgilioli.alunoservice.adapter.out.repository;
 
-import br.com.felixgilioli.alunoservice.entity.Aluno;
+import br.com.felixgilioli.alunoservice.domain.entity.Aluno;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AlunoRepository extends JpaRepository<Aluno, Long> {

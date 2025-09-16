@@ -1,19 +1,17 @@
 package br.com.felixgilioli.alunoservice.service;
 
-import br.com.felixgilioli.alunoservice.entity.Aluno;
-import br.com.felixgilioli.alunoservice.enumeration.Sexo;
-import br.com.felixgilioli.alunoservice.exception.AlunoJaCadastradoException;
-import br.com.felixgilioli.alunoservice.message.AlunoCadastrado;
-import br.com.felixgilioli.alunoservice.message.PublicaMensagemAlunoCadastrado;
-import br.com.felixgilioli.alunoservice.repository.AlunoRepository;
-import org.junit.jupiter.api.Assertions;
+import br.com.felixgilioli.alunoservice.domain.entity.Aluno;
+import br.com.felixgilioli.alunoservice.domain.enumeration.Sexo;
+import br.com.felixgilioli.alunoservice.domain.exception.AlunoJaCadastradoException;
+import br.com.felixgilioli.alunoservice.adapter.out.messaging.AlunoCadastrado;
+import br.com.felixgilioli.alunoservice.adapter.out.messaging.PublicaMensagemAlunoCadastrado;
+import br.com.felixgilioli.alunoservice.adapter.out.repository.AlunoRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,4 +1,4 @@
-package br.com.felixgilioli.alunoservice.message;
+package br.com.felixgilioli.alunoservice.adapter.out.messaging;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

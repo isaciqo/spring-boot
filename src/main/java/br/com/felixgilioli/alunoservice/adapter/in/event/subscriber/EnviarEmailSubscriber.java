@@ -1,6 +1,6 @@
-package br.com.felixgilioli.alunoservice.event.subscriber;
+package br.com.felixgilioli.alunoservice.adapter.in.event.subscriber;
 
-import br.com.felixgilioli.alunoservice.event.AlunoCadastradoEvent;
+import br.com.felixgilioli.alunoservice.domain.event.AlunoCadastradoEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 

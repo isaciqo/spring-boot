@@ -1,4 +1,4 @@
-package br.com.felixgilioli.alunoservice.message;
+package br.com.felixgilioli.alunoservice.adapter.out.messaging;
 
 public record AlunoCadastrado(
         Long id,

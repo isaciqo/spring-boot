@@ -1,9 +1,9 @@
-package br.com.felixgilioli.alunoservice.event.subscriber;
+package br.com.felixgilioli.alunoservice.adapter.in.event.subscriber;
 
-import br.com.felixgilioli.alunoservice.entity.Aluno;
-import br.com.felixgilioli.alunoservice.event.AlunoCadastradoEvent;
-import br.com.felixgilioli.alunoservice.message.AlunoCadastrado;
-import br.com.felixgilioli.alunoservice.message.PublicaMensagemAlunoCadastrado;
+import br.com.felixgilioli.alunoservice.domain.entity.Aluno;
+import br.com.felixgilioli.alunoservice.domain.event.AlunoCadastradoEvent;
+import br.com.felixgilioli.alunoservice.adapter.out.messaging.AlunoCadastrado;
+import br.com.felixgilioli.alunoservice.adapter.out.messaging.PublicaMensagemAlunoCadastrado;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
