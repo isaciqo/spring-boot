@@ -5,6 +5,7 @@ import br.com.felixgilioli.paymentService.domain.service.PaymentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public record PaymentsController(PaymentService paymentService) {
             @ApiResponse(responseCode = "200", description = "Payment successfully created"),
             @ApiResponse(responseCode = "400", description = "Invalid payment data")
     })
-    public Payment create(@RequestBody Payment payment) {
+    public Payment create(@RequestBody @Valid Payment payment) {
         return paymentService.create(payment);
     }
 

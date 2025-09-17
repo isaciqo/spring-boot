@@ -1,5 +1,6 @@
 package br.com.felixgilioli.paymentService.domain.entity;
 
+import jakarta.validation.constraints.*;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -9,33 +10,39 @@ import java.util.UUID;
 public class Payment {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @org.hibernate.annotations.GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
     @Column(name = "payment_id", updatable = false, nullable = false)
     private UUID paymentId;
 
     @Column(nullable = false)
+    @NotNull(message = "Amount is required")
+    @Positive
     private BigDecimal amount;
 
     @Column(name = "seller_id", nullable = false)
+    @NotNull(message = "Seller ID is required")
     private UUID sellerId;
 
     @Column(nullable = false, length = 50)
+    @NotBlank(message = "Brand is required")
     private String brand;
 
     @Column(nullable = false, length = 6)
+    @NotBlank(message = "BIN is required")
+    @Size(min = 6, max = 6, message = "BIN must be 6 characters")
     private String bin;
 
     @Column(nullable = false, length = 4)
+    @NotBlank(message = "CVC is required")
+    @Size(min = 4, max = 4, message = "CVC must be 4 characters")
     private String cvc;
 
     @Column(name = "order_id", nullable = false)
+    @NotNull(message = "Order ID is required")
     private UUID orderId;
 
     @Column(nullable = false, length = 100)
+    @Email(message = "Invalid email format")
+    @NotBlank(message = "Email is required")
     private String email;
 
     // Getters and Setters

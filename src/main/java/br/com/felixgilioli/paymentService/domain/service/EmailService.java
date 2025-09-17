@@ -10,7 +10,8 @@ public class EmailService {
 
     private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
 
-    public void sendEmail(SendEmailEvent event) {
+    public void sendEmail(SendEmailEvent event) throws InterruptedException {
+        Thread.sleep(10000); // simula timeout
         logger.info("📧 Simulando envio de e-mail -> To: {}, Subject: {}, Body: {}",
                 event.getTo(), event.getSubject(), event.getBody());
     }

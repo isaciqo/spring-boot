@@ -1,5 +1,6 @@
-package br.com.felixgilioli.paymentService.adapter.out.messaging;
+package br.com.felixgilioli.paymentService.adapter.in.event.subscriber;
 
+import br.com.felixgilioli.paymentService.adapter.out.messaging.RabbitMQConfig;
 import br.com.felixgilioli.paymentService.domain.event.SendEmailEvent;
 import br.com.felixgilioli.paymentService.domain.service.EmailService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -15,7 +16,7 @@ public class EmailEventListener {
     }
 
     @RabbitListener(queues = RabbitMQConfig.QUEUE)
-    public void onMessage(SendEmailEvent event) {
+    public void onMessage(SendEmailEvent event)throws InterruptedException {
         emailService.sendEmail(event);
     }
 }

@@ -8,9 +8,9 @@ import java.math.BigDecimal;
 public class AntifraudValidationClient {
 
     // Simula chamada a endpoint externo com timeout de 2 segundos
-    public void validatePayment(Payment payment) throws InterruptedException {
+    public void validatePayment(double amount) throws InterruptedException {
         Thread.sleep(2000); // simula timeout
-        if (BigDecimal.valueOf(422).compareTo(payment.getAmount()) == 0) {
+        if (amount == 422) {
             throw new RuntimeException("Transaction not authorized");
         }
     }

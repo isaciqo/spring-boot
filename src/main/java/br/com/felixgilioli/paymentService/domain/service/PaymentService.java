@@ -31,9 +31,9 @@ public class PaymentService {
     }
 
     public Payment create(Payment payment) {
-        boolean paymentExists = paymentRepository.existsById(payment.getPaymentId());
+        boolean existemesmo = paymentRepository.existsById(payment.getPaymentId());
 
-        if (paymentExists) {
+        if (existemesmo) {
             throw new PaymentAlreadyExistsException("Payment already exists with id: " + payment.getPaymentId());
         }
 
@@ -41,11 +41,13 @@ public class PaymentService {
         boolean antifraudFlag = antifraudService.checkAntifraudFlag();
         log.info("Antifraud flag: {}", antifraudFlag);
 
+        antifraudService.validatePayment(payment.getAmount().doubleValue());
+
         Payment savedPayment = paymentRepository.save(payment);
 
         // Publish event to RabbitMQ
         SendEmailEvent emailEvent = new SendEmailEvent(
-                "finance@company.com", // in real case, the client email or finance dept
+                payment.getEmail(), // in real case, the client email or finance dept
                 "Payment Confirmation",
                 "Your payment with ID " + savedPayment.getPaymentId() + " has been successfully processed."
         );
