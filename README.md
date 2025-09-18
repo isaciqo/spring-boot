@@ -1,5 +1,61 @@
+# Projeto techBRA
+
+Este repositório contém o projeto de um serviço de pagamento, que pode ser executado localmente utilizando Docker Compose. Além disso, disponibilizamos uma collection para testes via Postman.
+
+## Pré-requisitos
+
+- Docker
+- Docker Compose
+- Postman (opcional, para testar a API com a collection)
+
+## Como rodar o projeto
+
+**Executar com Docker Compose**
+
+```bash
+docker-compose up -d
 # 📘 Documentação Viva - Arquitetura do Sistema
 
+```
+
+# Fluxo de Pagamento - /post payment
+
+O endpoint `/post payment` é o endpoint principal e foi desenvolvido para simular um fluxo completo de pagamento, incluindo validações, cálculo de taxas e impostos, e notificação assíncrona do cliente. A ideia é representar de forma simplificada as principais etapas de um processo real de pagamento, como:
+
+- Verificação de autenticidade da compra;
+- Análise de risco de fraude;
+- Aplicação de regras de negócio para taxas, impostos e parcelamento.
+
+## Detalhamento do fluxo
+
+1. **Consulta inicial no banco de dados**  
+   Ao receber uma requisição, o sistema verifica se o pagamento já existe.
+
+2. **Validação da transação**  
+   Caso o pagamento não exista, é realizada uma validação da transação para garantir que ela está apta a continuar.
+  - Como parte do mock, se o valor enviado for `422`, o sistema retorna um erro de validação.
+
+3. **Cálculo de taxas e impostos**  
+   Se a transação estiver válida, o sistema obtém as informações de taxa e imposto:
+  - Esses dados são armazenados no **Redis**, permitindo um acesso rápido e evitando consultas repetidas a outros serviços.
+  - A única situação em que o sistema buscará novamente essas informações é quando elas ainda não estiverem no cache ou quando o tempo de expiração de 10 minutos tiver sido atingido.
+
+4. **Finalização do pagamento**  
+   Após aplicar as taxas e impostos, o fluxo de pagamento é finalizado.
+
+5. **Notificação assíncrona**  
+   Um evento é disparado para um serviço de notificação (mockado), responsável por enviar um e-mail ao cliente confirmando o pagamento de forma assíncrona.
+
+## Observações
+
+- O uso do Redis garante eficiência na leitura de informações que não mudam com frequência.
+- O mock de validação e notificação permite testar o fluxo sem depender de serviços externos.
+- O fluxo está estruturado de forma a permitir fácil extensão, como integração com serviços reais de antifraude ou gateways de pagamento.
+
+
+
+
+---
 Este documento descreve a arquitetura atual do sistema utilizando **C4 Model** e **ADRs (Architecture Decision Records)**.  
 O objetivo é manter a documentação atualizada e de fácil entendimento para todos os envolvidos.
 
@@ -41,36 +97,29 @@ graph TD
 
 ```mermaid
 graph TD
-    User[User] -->|HTTP REST| PaymentsController
+    User[User] -->|HTTP/S| PaymentService[Payment Service]
 
-    subgraph PaymentService [Payment Service - Spring Boot]
-        Controller[PaymentsController]
-        Service[PaymentService & AntifraudService]
-        Repo[PaymentRepository]
-        RedisAdapter[FlagRedisAdapter]
-        HttpClient[AntifraudValidationClient]
-        EventPublisher[EmailEventPublisher]
-        EventSubscriber[EmailEventListener]
-        Config[Configs (RabbitMQ, Redis, AsyncEvents)]
+    subgraph "Containers"
+        PaymentService[Payment Service<br>Spring Boot Application]
+        NotificationService[Notification Service<br>Spring Boot Application]
+        AntifraudService[Antifraud Service<br>External API]
     end
 
-    subgraph Infrastructure
+    subgraph "Infrastructure"
         DB[(H2 Database)]
-        MQ[(RabbitMQ)]
-        Cache[(Redis)]
-        AntifraudAPI[(Antifraud Validation API - external)]
+        Cache[(Redis Cache)]
+        MessageBroker[(RabbitMQ)]
     end
 
-    Controller --> Service
-    Service --> Repo
-    Service --> RedisAdapter
-    Service --> HttpClient
-    Repo --> DB
-    RedisAdapter --> Cache
-    Service --> EventPublisher
-    EventPublisher --> MQ
-    EventSubscriber --> Service
-    HttpClient --> AntifraudAPI
+    PaymentService -->|Reads/Writes to| DB
+    PaymentService -->|Reads/Writes to| Cache
+    PaymentService -->|Sends Message| MessageBroker
+    PaymentService -->|Synchronous API Call| AntifraudService
+    MessageBroker -->|Receives Message| NotificationService
+
+    style PaymentService fill:#f9f,stroke:#333,stroke-width:2px
+    style NotificationService fill:#9cf,stroke:#333,stroke-width:2px
+    style AntifraudService fill:#9c3,stroke:#333,stroke-width:2px
 ```
 
 ## 🧱 ADR 0001: Use Hexagonal Architecture
