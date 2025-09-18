@@ -17,6 +17,7 @@ docker-compose up -d
 # 📘 Documentação Viva - Arquitetura do Sistema
 
 ```
+**Vá até http://localhost:8080/swagger-ui/index.html# para analisar o Swagger **
 
 # Fluxo de Pagamento - /post payment
 

@@ -10,6 +10,7 @@ import java.util.UUID;
 public class Payment {
 
     @Id
+    @NotNull(message = "paymentId is required")
     @Column(name = "payment_id", updatable = false, nullable = false)
     private UUID paymentId;
 

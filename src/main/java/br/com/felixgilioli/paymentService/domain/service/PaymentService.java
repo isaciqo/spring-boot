@@ -1,6 +1,7 @@
 package br.com.felixgilioli.paymentService.domain.service;
 
 import br.com.felixgilioli.paymentService.domain.entity.Payment;
+import br.com.felixgilioli.paymentService.domain.entity.PutBody;
 import br.com.felixgilioli.paymentService.domain.event.SendEmailEvent;
 import br.com.felixgilioli.paymentService.adapter.out.messaging.EmailEventPublisher;
 import br.com.felixgilioli.paymentService.adapter.out.repository.PaymentRepository;
@@ -65,11 +66,11 @@ public class PaymentService {
         return paymentRepository.findAll();
     }
 
-    public Payment update(UUID id, Payment updatedPayment) {
+    public Payment update(UUID id, PutBody updatedPayment) {
         Payment existing = paymentRepository.findById(id)
                 .orElseThrow(() -> new PaymentNotFoundException("Payment not found with id: " + id));
 
-        existing.setSellerId(updatedPayment.getSellerId());
+        existing.setEmail(updatedPayment.getEmail());
         existing.setAmount(updatedPayment.getAmount());
 
         return paymentRepository.save(existing);

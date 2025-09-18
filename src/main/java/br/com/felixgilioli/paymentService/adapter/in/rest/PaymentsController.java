@@ -1,6 +1,7 @@
 package br.com.felixgilioli.paymentservice.adapter.in.rest;
 
 import br.com.felixgilioli.paymentService.domain.entity.Payment;
+import br.com.felixgilioli.paymentService.domain.entity.PutBody;
 import br.com.felixgilioli.paymentService.domain.service.PaymentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -50,8 +51,8 @@ public record PaymentsController(PaymentService paymentService) {
             @ApiResponse(responseCode = "200", description = "Payment successfully updated"),
             @ApiResponse(responseCode = "404", description = "Payment not found")
     })
-    public Payment update(@PathVariable UUID id, @RequestBody Payment payment) {
-        return paymentService.update(id, payment);
+    public Payment update(@PathVariable UUID id, @RequestBody PutBody putBody) {
+        return paymentService.update(id, putBody);
     }
 
     @DeleteMapping("/{id}")
