@@ -48,7 +48,7 @@ public class PaymentService {
 
         // Publish event to RabbitMQ
         SendEmailEvent emailEvent = new SendEmailEvent(
-                payment.getEmail(), // in real case, the client email or finance dept
+                payment.getEmail(),
                 "Payment Confirmation",
                 "Your payment with ID " + savedPayment.getPaymentId() + " has been successfully processed."
         );

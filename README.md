@@ -10,14 +10,23 @@ Este repositório contém o projeto de um serviço de pagamento, que pode ser ex
 
 ## Como rodar o projeto
 
-**Executar com Docker Compose**
+**Executar o Docker Compose**
 
 ```bash
 docker-compose up -d
 # 📘 Documentação Viva - Arquitetura do Sistema
 
 ```
-**Vá até http://localhost:8080/swagger-ui/index.html# para analisar o Swagger **
+**Executar localmente**
+
+Para rodar o serviço , basta abrir o projeto no **IntelliJ IDEA**, localizar a classe principal:
+
+src/main/java/br/com/felixgilioli/paymentService/PaymentServiceApplication.java
+
+E executar o método `main`.  
+Isso iniciará a aplicação com o servidor embutido do Spring Boot, disponível em:
+
+**Vá até http://localhost:8080/swagger-ui/index.html# para analisar o Swagger**
 
 # Fluxo de Pagamento - /post payment
 

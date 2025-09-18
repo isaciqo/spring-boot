@@ -9,7 +9,7 @@ public class AntifraudValidationClient {
 
     // Simula chamada a endpoint externo com timeout de 2 segundos
     public void validatePayment(double amount) throws InterruptedException {
-        Thread.sleep(1000); // simula timeout
+
         if (amount == 422) {
             throw new RuntimeException("Transaction not authorized");
         }
